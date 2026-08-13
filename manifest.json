@@ -1,0 +1,19 @@
+{
+  "name": "Photobooth+",
+  "short_name": "Photobooth+",
+  "description": "Capture moments in your browser — a retro photobooth that works offline.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#1b1b1e",
+  "theme_color": "#1b1b1e",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

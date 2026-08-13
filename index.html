@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Photobooth+ — capture moments in your browser</title>
+<meta name="description" content="A retro photobooth that lives entirely in your browser. Works offline, no account, no upload." />
+<meta name="theme-color" content="#1b1b1e" />
+<link rel="icon" href="icon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="curtain-backdrop" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true">◍</span>
+    <span class="brand-name">Photobooth<span class="plus">+</span></span>
+  </div>
+  <div class="status" id="statusPill">
+    <span class="status-dot" id="statusDot"></span>
+    <span id="statusText">starting camera…</span>
+  </div>
+</header>
+
+<main class="booth">
+
+  <!-- Left sprocket decoration -->
+  <div class="sprocket sprocket-left" aria-hidden="true"></div>
+
+  <section class="stage">
+    <div class="viewfinder" id="viewfinder">
+      <video id="video" autoplay playsinline muted></video>
+      <canvas id="captureCanvas" hidden></canvas>
+
+      <div class="countdown" id="countdown" aria-live="polite"></div>
+      <p class="countdown-hint" id="countdownHint">Tap the booth to capture now</p>
+      <div class="flash" id="flash" aria-hidden="true"></div>
+
+      <div class="viewfinder-frame" aria-hidden="true">
+        <span class="corner tl"></span>
+        <span class="corner tr"></span>
+        <span class="corner bl"></span>
+        <span class="corner br"></span>
+      </div>
+
+      <p class="camera-error" id="cameraError" hidden>
+        Can't reach a camera. Check your browser's permission for this site, then reload.
+      </p>
+    </div>
+
+    <div class="filters" id="timerOptions" role="group" aria-label="Countdown timer">
+      <span class="chip-label">Timer</span>
+      <button class="filter-chip" data-timer="0">Quick snap</button>
+      <button class="filter-chip is-active" data-timer="3">3s</button>
+      <button class="filter-chip" data-timer="5">5s</button>
+      <button class="filter-chip" data-timer="10">10s</button>
+    </div>
+
+    <div class="filters" id="filters" role="group" aria-label="Filters">
+      <span class="chip-label">Filter</span>
+      <button class="filter-chip is-active" data-filter="none">None</button>
+      <button class="filter-chip" data-filter="bw">B&amp;W</button>
+      <button class="filter-chip" data-filter="sepia">Sepia</button>
+      <button class="filter-chip" data-filter="vintage">Vintage</button>
+      <button class="filter-chip" data-filter="vivid">Vivid</button>
+      <button class="filter-chip" data-filter="cool">Cool</button>
+    </div>
+
+    <div class="filters strip-styles" id="stripStyles" role="group" aria-label="Film strip design" hidden>
+      <span class="chip-label">Strip design</span>
+      <button class="filter-chip is-active" data-strip-style="classic">Classic</button>
+      <button class="filter-chip" data-strip-style="noir">Noir</button>
+      <button class="filter-chip" data-strip-style="polaroid">Polaroid</button>
+      <button class="filter-chip" data-strip-style="custom">Custom</button>
+      <label class="filter-chip" for="customTemplateInput" id="customTemplateLabel">Upload my design…</label>
+      <input type="file" id="customTemplateInput" accept="image/*" hidden />
+      <button class="text-btn" id="downloadTemplateBtn">Download blank template</button>
+    </div>
+
+    <div class="controls">
+      <div class="mode-group">
+        <span class="chip-label">Mode</span>
+        <div class="mode-toggle" role="group" aria-label="Capture mode">
+          <button class="mode-btn is-active" data-mode="single">Single shot</button>
+          <button class="mode-btn" data-mode="strip">4-up strip</button>
+          <button class="mode-btn" data-mode="gif">GIF burst</button>
+        </div>
+      </div>
+
+      <button class="shutter" id="shutterBtn" aria-label="Take photo">
+        <span class="shutter-ring"></span>
+        <span class="shutter-core"></span>
+      </button>
+
+      <button class="icon-btn" id="switchCamBtn" title="Switch camera" aria-label="Switch camera">⟲</button>
+    </div>
+  </section>
+
+  <!-- Right filmstrip -->
+  <aside class="filmstrip" id="filmstrip" aria-label="Captured photos">
+    <div class="filmstrip-head">
+      <h2>Reel</h2>
+      <button class="text-btn" id="clearReelBtn">Clear</button>
+    </div>
+    <div class="filmstrip-scroll" id="filmstripScroll">
+      <p class="filmstrip-empty" id="filmstripEmpty">Your shots will hang here, like a real strip of film.</p>
+    </div>
+  </aside>
+
+  <div class="sprocket sprocket-right" aria-hidden="true"></div>
+</main>
+
+<div class="preview-overlay" id="previewOverlay" hidden>
+  <div class="preview-card">
+    <img id="previewImg" alt="Captured photo" />
+    <div class="preview-actions">
+      <button class="text-btn" id="previewClose">Back to booth</button>
+      <div class="preview-actions-right">
+        <button class="secondary-btn" id="previewPrint">Print</button>
+        <button class="primary-btn" id="previewDownload">Download</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="foot-note">
+  <span id="offlineNote">Ready to work offline once loaded — nothing you capture ever leaves this browser.</span>
+</footer>
+
+<script src="gifenc.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
